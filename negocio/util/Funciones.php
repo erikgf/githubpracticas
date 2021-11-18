@@ -416,7 +416,13 @@ class Funciones {
             //SMTP::DEBUG_CLIENT = client messages
             //SMTP::DEBUG_SERVER = client and server messages
             $mail->SMTPDebug = $debug; 
-
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
             //Set the hostname of the mail server
             $mail->Host = 'smtp.gmail.com';
             //Use `$mail->Host = gethostbyname('smtp.gmail.com');`
@@ -427,12 +433,12 @@ class Funciones {
             // - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
             // - 587 for SMTP+STARTTLS
             $mail->Port = 587;
-
+            $mail->Mailer = "smtp";
             //Set the encryption mechanism to use:
             // - SMTPS (implicit TLS on port 465) or
             // - STARTTLS (explicit TLS on port 587)
             $mail->SMTPSecure = $stmpSecure; 
-
+            $mail->SMTPKeepAlive = true; 
             //Whether to use SMTP authentication
             $mail->SMTPAuth = true;
 
